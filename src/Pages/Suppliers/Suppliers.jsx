@@ -1,6 +1,7 @@
 const Suppliers = (props) => {
     return (
         <>
+        <h1>Proveedores</h1>
         </>
     );
 }

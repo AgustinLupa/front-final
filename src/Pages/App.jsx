@@ -1,7 +1,10 @@
-import { useState } from 'react'
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import './App.css'
-import {Base} from "../Layouts/Base"
+import { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Base from "../Layouts/Base";
+import Login from "./Login/Login";
+import Users from "./Users/Users";
+import Employees from "./Employees/Employees";
+import Suppliers from "./Suppliers/Suppliers";
 
 function App() {
 
@@ -27,7 +30,7 @@ function App() {
             element: <Base children={<Employees />}/>
           }
         ]
-      );
+      );      
     }
   }, [isLoged]);
 
