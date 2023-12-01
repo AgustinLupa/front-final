@@ -3,18 +3,28 @@ import { Link } from "react-router-dom";
 const Base = (props) => {
     return(
         <>
-        <section className="w-[100vw] flex justify-center">
-            <menu className="w-[100vw] h-[3rem] absolute bg-slate-500 shadow-sm flex justify-evenly items-center text-white">
-                <div className="dropdown-menu">
-                    <span className="dropdown-item-text">Usuarios</span>
-                        <Link className="dropdown-item" to='/users' replace={true}>Buscar Usuarios</Link>
-                        <Link className="dropdown-item" to='/createUser' replace={true}>Crear Usuarios</Link>
-                </div>                
-            </menu>
-            <div className="mt-[4rem]">
+            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                <a className="navbar-brand" href="#">Navbar</a>
+                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+                <div className="collapse navbar-collapse" id="navbarNav">
+                    <ul className="navbar-nav">
+                        <li className="nav-item active">
+                            <Link className="nav-link" to='/users' replace={true}>Usuarios</Link>  
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to='/employees' replace={true}>Empleados</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to='/suppliers' replace={true}>Proveedores</Link>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <div className="container">
                 {props.children}
             </div>
-        </section>
         </>
     );
 }
