@@ -33,11 +33,11 @@ function App() {
             element: <Base children={<Users />}/>
           },          
           {
-            path:'/supplier',
+            path:'/suppliers',
             element: <Base children={<Suppliers />}/>
           },
           {
-            path:'/employee',
+            path:'/employees',
             element: <Base children={<Employees />}/>
           }
         ]
