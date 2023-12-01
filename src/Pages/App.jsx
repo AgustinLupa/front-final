@@ -8,14 +8,25 @@ import Suppliers from "./Suppliers/Suppliers";
 
 function App() {
 
-  const [availableRoutes, setvAilableRoutes] = useState([]);
+  const [availableRoutes, setAvailableRoutes] = useState([]);
   const [isLoged, setIsLoged] = useState(false);
 
+  const handleLogout = () => {
+    localStorage.removeItem('jwt');
+    setIsLoged(false);
+  };
 
+  const handleLogin = () => {
+    setIsLoged(true);
+  };
+
+  const isLogged= ()=> {
+    return isLoged;
+  }
 
   useEffect(() => {
     if(localStorage.getItem('jwt')){
-      setvAilableRoutes(
+      setAvailableRoutes(
         [
           {
             path:'/users',
@@ -31,13 +42,16 @@ function App() {
           }
         ]
       );      
-    }
-  }, [isLoged]);
+      setIsLoged(true);
+    } else {
+      setAvailableRoutes([]);
+      setIsLoged(false);
+    }}, [isLoged]);
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='*' element={<Login setIsLoged={setIsLoged} />} />
+        <Route path='*' element={<Login onLogin={handleLogin} isLogged={isLogged} onLogout={handleLogout}/>} />
         {
           availableRoutes.map((item, index) => {
             return(
