@@ -29,6 +29,10 @@ function App() {
       setAvailableRoutes(
         [
           {
+            path:'/login',
+            element: <Login onLogin={handleLogin} isLogged={isLogged} onLogout={handleLogout}/>
+          },
+          {
             path:'/users',
             element: <Base children={<Users />}/>
           },          

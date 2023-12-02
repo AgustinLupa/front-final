@@ -31,7 +31,8 @@ const Login = (props) => {
     }
   };
 
-  if (redirect) {    
+  if (redirect) {
+    
     if (response.response?.user?.id_Role === 2) {
       return <Navigate to='/users' replace={true} />;
     } else {
@@ -69,7 +70,7 @@ const Login = (props) => {
                                         {loading ? 'Ingresando...' : 'Ingresar'}
                                     </button>
                                 </form>
-                                {error && <div className="text-danger m-10">{error}</div>}
+                                {error && <div className="text-danger mt-3">{error}</div>}
                             </div>
                         </div>
                     </div>
