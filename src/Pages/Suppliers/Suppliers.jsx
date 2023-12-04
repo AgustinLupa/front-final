@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { create, list } from '../../Services/Suppliers';
+import { create, edit, hide, list } from '../../Services/Suppliers';
 
 const Suppliers = (props) => {
 
@@ -26,8 +26,18 @@ const Suppliers = (props) => {
 
     const handleEdit = async (e) => {
         e.preventDefault();
+        if (itemOnEdit?.address !== undefined)
+            itemOnEdit.address == itemOnEdit.adress;        
+        let rsp = await edit(itemOnEdit);        
+        console.log(rsp);
+        if (rsp?.statusCode == 200){
+            loadTableData();            
+            setItemOnEdit(null);
+        }
+        else if (rsp?.status == 400){
+            console.log(rsp);
+        }            
         console.log(itemOnEdit);
-        setItemOnEdit(null);
     }
 
     const loadTableData = async () => {
@@ -36,12 +46,17 @@ const Suppliers = (props) => {
         if (rsp?.statusCode == 200){
             setTableData(rsp.response);
         } else {
-
+            window.alert('No se pudo cargar la informacion. Inicie sesion nuevamente.');
+            window.location.replace('/login') 
         }
     }
 
     const hideItem = async (id) => {
-
+        let rsp = await hide(id);
+        console.log(rsp);
+        if (rsp?.statusCode == 200){
+            loadTableData();
+        }
     }
 
     useEffect( () => {
