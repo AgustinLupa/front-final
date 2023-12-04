@@ -19,7 +19,14 @@ const Users = (props) => {
         let rsp = await searchUsers();          
         if(rsp?.statusCode === 200){
             setTableInfo(rsp.response);
-        }/*else{
+        }
+        
+        if(rsp instanceof TypeError){
+            window.alert('No se pudo cargar la informacion Inicie sesion nuevamente');
+            window.location.replace('/login') 
+        }     
+        
+        /*else{
             window.alert('No se pudo cargar la informacion Inicie sesion nuevamente');
             window.location.replace('/login') 
         }    */                                                                                       
@@ -52,9 +59,7 @@ const Users = (props) => {
             if (rsp?.statusCode === 200) {
                 setResponse("Se creo el Usuario con Exito!.")
                 setAction(true);
-            }
-
-            console.log(rsp);
+            }            
 
             if(rsp instanceof TypeError){
                 window.alert('No se pudo cargar la informacion Inicie sesion nuevamente');

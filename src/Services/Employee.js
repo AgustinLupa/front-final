@@ -8,14 +8,14 @@ export const createEmployee = async (new_employee_data) => {
 }
 
 export const searchEmployee = async () => {
-    let url = 'employee';
+    let url = 'employee/active';
     let rsp = await GET(url);
 
     return rsp;
 }
 
 export const updateEmployee = async (id, update_params) => {
-    let url ='employee' + {id};
+    let url ='employee/' + id;
     let rsp = await PUT(url, update_params);
     
     return rsp;
