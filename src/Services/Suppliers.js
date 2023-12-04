@@ -1,4 +1,4 @@
-import { GET, POST } from "./Httpr";
+import { DELETE, GET, POST, PUT } from "./Httpr";
 
 const base_url= 'suppliers/';
 
@@ -11,5 +11,16 @@ export const create =  async (newSupplier) => {
 export const list = async () => {
     const url= base_url + 'active';
     let response= await GET(url);
+    return response;
+}
+
+export const edit = async (supplier) => {
+    let response= await PUT(base_url);
+    return response;
+}
+
+export const hide = async (supplierId) => {
+    const url= base_url + supplierId;
+    let response= await DELETE(url);
     return response;
 }
