@@ -16,6 +16,7 @@ const Employees = (props) => {
         if (rsp?.status == 200){            
             loadTableData();
             setSubmitSuccess("Se Creo el Empleado correctamente");
+            setEmployeeData(initialState);
         }            
         if (rsp?.status === 400 && rsp.errors) {            
             let errorMessages = Object.values(rsp.errors)
@@ -45,6 +46,7 @@ const Employees = (props) => {
             loadTableData();            
             setItemOnEdit(null);
             setSubmitSuccess("Se modifico Correctamente el empleado");
+            setEmployeeData(initialState);
         }
         
         else if (rsp?.status == 400){
@@ -63,6 +65,13 @@ const Employees = (props) => {
             window.location.replace('/login') 
         }  
     }
+
+    const initialState = {
+        name: '',
+        lastName: '',
+        dni: '',
+        code_Employee: '',
+    };
 
     const loadTableData = async () => {
         let rsp = await searchEmployee();        
