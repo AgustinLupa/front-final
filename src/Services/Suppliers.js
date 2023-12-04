@@ -15,7 +15,7 @@ export const list = async () => {
 }
 
 export const edit = async (supplier) => {
-    let response= await PUT(base_url);
+    let response= await PUT(base_url, supplier);
     return response;
 }
 
