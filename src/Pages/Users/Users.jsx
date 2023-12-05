@@ -23,7 +23,7 @@ const Users = (props) => {
         
         if(rsp instanceof TypeError){
             window.alert('No se pudo cargar la informacion Inicie sesion nuevamente');
-            window.location.replace('/login') 
+            window.location.replace('/logout')  
         }     
         
         /*else{
@@ -63,7 +63,7 @@ const Users = (props) => {
 
             if(rsp instanceof TypeError){
                 window.alert('No se pudo cargar la informacion Inicie sesion nuevamente');
-                window.location.replace('/login') 
+                window.location.replace('/logout') 
             }       
     }
 

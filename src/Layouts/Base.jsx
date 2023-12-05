@@ -18,9 +18,15 @@ const Base = (props) => {
                         </li>
                         <li className="nav-item">
                             <Link className="nav-link" to='/suppliers' replace={true}>Proveedores</Link>
+                        </li>                        
+                    </ul>
+                    <ul className="navbar-nav ml-auto">
+                        <li className="nav-item">
+                            <Link className="nav-link" to='/logout' replace={true}>Cerrar Sesión</Link>
                         </li>
                     </ul>
                 </div>
+                
             </nav>
             <div className="container">
                 {props.children}

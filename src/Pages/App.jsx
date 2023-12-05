@@ -5,16 +5,12 @@ import Login from "./Login/Login";
 import Users from "./Users/Users";
 import Employees from "./Employees/Employees";
 import Suppliers from "./Suppliers/Suppliers";
+import Logout from "./Login/Logout";
 
 function App() {
 
   const [availableRoutes, setAvailableRoutes] = useState([]);
-  const [isLoged, setIsLoged] = useState(false);
-
-  const handleLogout = () => {
-    localStorage.removeItem('jwt');
-    setIsLoged(false);
-  };
+  const [isLoged, setIsLoged] = useState(false);  
 
   const handleLogin = () => {
     setIsLoged(true);
@@ -29,8 +25,12 @@ function App() {
       setAvailableRoutes(
         [
           {
+            path:'/logout',
+            element: <Logout />
+          },
+          {
             path:'/login',
-            element: <Login onLogin={handleLogin} isLogged={isLogged} onLogout={handleLogout}/>
+            element: <Login onLogin={handleLogin} isLogged={isLogged}/>
           },
           {
             path:'/users',
@@ -55,7 +55,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='*' element={<Login onLogin={handleLogin} isLogged={isLogged} onLogout={handleLogout}/>} />
+        <Route path='*' element={<Login onLogin={handleLogin} isLogged={isLogged} />} />
         {
           availableRoutes.map((item, index) => {
             return(

@@ -5,15 +5,18 @@ const Employees = (props) => {
 
     const [employeeData, setEmployeeData] = useState({});
     const [tableData, setTableData] = useState([]);
+    const [loading, setLoading] = useState(false);
     const [submitErrors, setSubmitErrors] = useState();
     const [submitsuccess, setSubmitSuccess] = useState ();
     const [itemOnEdit, setItemOnEdit] = useState(null);
  
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        setLoading(true);
         let rsp = await createEmployee(employeeData);
 
-        if (rsp?.status == 200){            
+        if (rsp?.statusCode == 200){            
             loadTableData();
             setSubmitSuccess("Se Creo el Empleado correctamente");
             setEmployeeData(initialState);
@@ -34,12 +37,15 @@ const Employees = (props) => {
 
         if(rsp instanceof TypeError){
             window.alert('No se pudo cargar la informacion Inicie sesion nuevamente');
-            window.location.replace('/login') 
-        }   
+
+            window.location.replace('/logout') 
+        }
+        setLoading(false);   
     }
 
     const handleEdit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         console.log(itemOnEdit.code_Employee);            
         let rsp = await updateEmployee(itemOnEdit.id, itemOnEdit);                
         if (rsp?.statusCode == 200){
@@ -62,8 +68,10 @@ const Employees = (props) => {
         
         if(rsp instanceof TypeError){
             window.alert('No se pudo cargar la informacion Inicie sesion nuevamente');
-            window.location.replace('/login') 
-        }  
+            window.location.replace('/logout')  
+        }
+        
+        setLoading(false);
     }
 
     const initialState = {
@@ -113,18 +121,18 @@ const Employees = (props) => {
                                         <h5 className="card-title mb-4">Nuevo Empleado</h5>
                                         <form onSubmit={handleSubmit} className="form-inline">
                                             <label className="sr-only" >Nombre</label>
-                                            <input onChange={(e) => setEmployeeData({...employeeData, name: e.target.value})} type="text" className="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Nombre de Empleado"/>
+                                            <input onChange={(e) => setEmployeeData({...employeeData, name: e.target.value})} type="text" className="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Nombre de Empleado" disabled={loading}/>
 
                                             <label className="sr-only" >Apellido</label>                                                                  
-                                            <input onChange={(e) => setEmployeeData({...employeeData, lastName: e.target.value})} type="text" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder="Apellido"/>      
+                                            <input onChange={(e) => setEmployeeData({...employeeData, lastName: e.target.value})} type="text" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder="Apellido" disabled={loading}/>      
 
                                             <label className="sr-only" >Dni</label>                                                                  
-                                            <input onChange={(e) => setEmployeeData({...employeeData, dni: e.target.value})} type="number" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder="DNI"/>
+                                            <input onChange={(e) => setEmployeeData({...employeeData, dni: e.target.value})} type="number" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder="DNI" disabled={loading}/>
 
                                             <label className="sr-only" >Codigo de empleado</label>                                                                  
-                                            <input onChange={(e) => setEmployeeData({...employeeData, code_Employee: e.target.value})} type="number" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder="Codigo de Empleado"/>                                                        
+                                            <input onChange={(e) => setEmployeeData({...employeeData, code_Employee: e.target.value})} type="number" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder="Codigo de Empleado" disabled={loading}/>                                                        
 
-                                            <button type="submit" className="btn btn-success mb-2">+</button>
+                                            <button type="submit" className="btn btn-success mb-2" disabled={loading}>+</button>
                                         </form>
                                     </>                                    
                                 ) : (
@@ -132,19 +140,19 @@ const Employees = (props) => {
                                         <h5 className="card-title mb-4">Editar Empleado</h5>
                                         <form onSubmit={handleEdit} className="form-inline">
                                             <label className="sr-only" >Cambiar nombre</label>
-                                            <input onChange={(e) => setItemOnEdit({...itemOnEdit, name: e.target.value})} type="text" className="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder={itemOnEdit.name}/>
+                                            <input onChange={(e) => setItemOnEdit({...itemOnEdit, name: e.target.value})} type="text" className="form-control mb-2 mr-sm-2" id="inlineFormInputName2" value={itemOnEdit.name} placeholder={itemOnEdit.name} disabled={loading}/>
 
                                             <label className="sr-only" >Cambiar Apellido</label>                                                                  
-                                            <input onChange={(e) => setItemOnEdit({...itemOnEdit, lastName: e.target.value})} type="text" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder={itemOnEdit.lastName}/>      
+                                            <input onChange={(e) => setItemOnEdit({...itemOnEdit, lastName: e.target.value})} type="text" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" value={itemOnEdit.lastName} placeholder={itemOnEdit.lastName} disabled={loading}/>      
 
                                             <label className="sr-only" >Cambiar DNI</label>                                                                  
-                                            <input onChange={(e) => setItemOnEdit({...itemOnEdit, dni: e.target.value})} type="number" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder={itemOnEdit.dni}/>
+                                            <input onChange={(e) => setItemOnEdit({...itemOnEdit, dni: e.target.value})} type="number" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" value={itemOnEdit.dni} placeholder={itemOnEdit.dni} disabled={loading}/>
 
                                             <label className="sr-only" >Cambiar Codigo de empleado</label>                                                                  
-                                            <input onChange={(e) => setItemOnEdit({...itemOnEdit, code_Employee: e.target.value})} type="number" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder={itemOnEdit.code_Employee}/>                                                        
+                                            <input onChange={(e) => setItemOnEdit({...itemOnEdit, code_Employee: e.target.value})} type="number" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" value={itemOnEdit.code_Employee} placeholder={itemOnEdit.code_Employee} disabled={loading}/>                                                        
 
-                                            <button type="submit" className="btn btn-success btn-sm mr-2">Aceptar <i className="bi bi-check2"></i></button>
-                                            <button onClick={() => setItemOnEdit(null)} type="button" className="btn btn-danger btn-sm">Cancelar <i className="bi bi-x-lg"></i></button>
+                                            <button type="submit" className="btn btn-success btn-sm mr-2" disabled={loading}>Aceptar <i className="bi bi-check2"></i></button>
+                                            <button onClick={() => setItemOnEdit(null)} type="button" className="btn btn-danger btn-sm" disabled={loading}>Cancelar <i className="bi bi-x-lg"></i></button>
                                         </form>
                                     </>
                                 )
