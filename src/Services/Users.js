@@ -15,9 +15,9 @@ export const searchUsers = async () => {
     return rsp;
 }
 
-export const updateUsers = async (id, update_params) => {
-    let url ='users/update/' + id;
-    let rsp = await PUT(url, update_params);
+export const updateUsers = async (user) => {
+    let url ='users/update/' + user.id;
+    let rsp = await PUT(url, user);
     
     return rsp;
 }
