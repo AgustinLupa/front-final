@@ -25,8 +25,8 @@ const Suppliers = (props) => {
 
     const handleEdit = async (e) => {
         e.preventDefault();
-        if (itemOnEdit?.address !== undefined)
-            itemOnEdit.address == itemOnEdit.adress;        
+        if (itemOnEdit.address === undefined)
+            itemOnEdit.address= itemOnEdit.adress;        
         let rsp = await edit(itemOnEdit);        
         console.log(rsp);
         if (rsp?.statusCode == 200){
@@ -91,13 +91,13 @@ const Suppliers = (props) => {
                                         <h5 className="card-title mb-4">Editar proveedor</h5>
                                         <form onSubmit={handleEdit} className="form-inline">
                                             <label className="sr-only" >Cambiar nombre</label>
-                                            <input onChange={(e) => setItemOnEdit({...itemOnEdit, name: e.target.value})} type="text" className="form-control mb-2 mr-sm-2" value={itemOnEdit.name}/>
+                                            <input onChange={(e) => setItemOnEdit({...itemOnEdit, name: e.target.value})} type="text" className="form-control mb-2 mr-sm-2" value={itemOnEdit.name} placeholder={itemOnEdit.name}/>
 
                                             <label className="sr-only" >Cambiar direccion</label>                                                                  
-                                            <input onChange={(e) => setItemOnEdit({...itemOnEdit, address: e.target.value})} type="text" className="form-control mb-2 mr-sm-2" value={itemOnEdit.adress}/>      
+                                            <input onChange={(e) => setItemOnEdit({...itemOnEdit, address: e.target.value})} type="text" className="form-control mb-2 mr-sm-2" value={itemOnEdit.adress} placeholder={itemOnEdit.adress}/>      
 
                                             <label className="sr-only" >Cambiar telefono</label>                                                                  
-                                            <input onChange={(e) => setItemOnEdit({...itemOnEdit, phone: e.target.value})} type="number" className="form-control mb-2 mr-sm-2" value={itemOnEdit.phone}/>                                                        
+                                            <input onChange={(e) => setItemOnEdit({...itemOnEdit, phone: e.target.value})} type="number" className="form-control mb-2 mr-sm-2" value={itemOnEdit.phone} placeholder={itemOnEdit.phone}/>                                                        
 
                                             <button type="submit" className="btn btn-success btn-sm mr-2">Aceptar <i className="bi bi-check2"></i></button>
                                             <button onClick={() => setItemOnEdit(null)} type="button" className="btn btn-danger btn-sm">Cancelar <i className="bi bi-x-lg"></i></button>
