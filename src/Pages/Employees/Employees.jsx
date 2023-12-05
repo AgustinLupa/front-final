@@ -121,16 +121,16 @@ const Employees = (props) => {
                                         <h5 className="card-title mb-4">Nuevo Empleado</h5>
                                         <form onSubmit={handleSubmit} className="form-inline">
                                             <label className="sr-only" >Nombre</label>
-                                            <input onChange={(e) => setEmployeeData({...employeeData, name: e.target.value})} type="text" className="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Nombre de Empleado" disabled={loading}/>
+                                            <input onChange={(e) => setEmployeeData({...employeeData, name: e.target.value})} type="text" className="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Nombre de Empleado" value={employeeData.name} disabled={loading}/>
 
                                             <label className="sr-only" >Apellido</label>                                                                  
-                                            <input onChange={(e) => setEmployeeData({...employeeData, lastName: e.target.value})} type="text" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder="Apellido" disabled={loading}/>      
+                                            <input onChange={(e) => setEmployeeData({...employeeData, lastName: e.target.value})} type="text" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder="Apellido" value={employeeData.lastName} disabled={loading}/>      
 
                                             <label className="sr-only" >Dni</label>                                                                  
-                                            <input onChange={(e) => setEmployeeData({...employeeData, dni: e.target.value})} type="number" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder="DNI" disabled={loading}/>
+                                            <input onChange={(e) => setEmployeeData({...employeeData, dni: e.target.value})} type="number" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder="DNI" value={employeeData.dni} disabled={loading}/>
 
                                             <label className="sr-only" >Codigo de empleado</label>                                                                  
-                                            <input onChange={(e) => setEmployeeData({...employeeData, code_Employee: e.target.value})} type="number" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder="Codigo de Empleado" disabled={loading}/>                                                        
+                                            <input onChange={(e) => setEmployeeData({...employeeData, code_Employee: e.target.value})} type="number" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder="Codigo de Empleado" value={employeeData.code_Employee} disabled={loading}/>                                                        
 
                                             <button type="submit" className="btn btn-success mb-2" disabled={loading}>+</button>
                                         </form>
