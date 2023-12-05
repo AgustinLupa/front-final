@@ -22,8 +22,8 @@ export const updateEmployee = async (id, update_params) => {
 }
 
 export const deleteEmployee = async  (code_employee) =>{
-    let url = 'employee' + {code_employee};
-    let rsp = await DELETE(url, request);
+    let url = 'employee/' + code_employee;
+    let rsp = await DELETE(url);
 
     return rsp;
 }

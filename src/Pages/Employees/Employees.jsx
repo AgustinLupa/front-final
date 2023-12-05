@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { createEmployee, searchEmployee, updateEmployee } from '../../Services/Employee';
+import { createEmployee, searchEmployee, updateEmployee, deleteEmployee } from '../../Services/Employee';
 
 const Employees = (props) => {
 
@@ -91,8 +91,30 @@ const Employees = (props) => {
         }
     }
 
-    const hideItem = async (id) => {
+    const hideItem = async (code_Employee) => {
+        let rsp = await deleteEmployee(code_Employee);
 
+        if (rsp?.statusCode == 200){
+            loadTableData();            
+            setSubmitSuccess("Se Elimino Correctamente el empleado");
+            setEmployeeData(initialState);
+        }
+        
+        else if (rsp?.status == 400){
+            let errorMessages = Object.values(rsp.errors)
+                .flat()
+                .join(' ');
+
+            setSubmitErrors(errorMessages);                
+        }else if(rsp?.statusCode === 500){
+            let error = "El codigo de empleado no es valido. " + rsp.message;
+            setSubmitErrors(error);
+        } 
+        
+        if(rsp instanceof TypeError){
+            window.alert('No se pudo cargar la informacion Inicie sesion nuevamente');
+            window.location.replace('/logout')  
+        }
     }
 
     useEffect( () => {
@@ -189,7 +211,7 @@ const Employees = (props) => {
                                                     <td>{item.code_Employee}</td>
                                                     <td>
                                                         <button onClick={() => setItemOnEdit(item)} className="btn btn-sm btn-info mr-2"><i className="bi bi-pencil-square"></i></button>
-                                                        <button onClick={() => hideItem(item.id)} className="btn btn-sm btn-dark"><i className="bi bi-eye-slash"></i></button>
+                                                        <button onClick={() => hideItem(item.code_Employee)} className="btn btn-sm btn-dark"><i className="bi bi-eye-slash"></i></button>
                                                     </td>
                                                 </tr>
                                             );

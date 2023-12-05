@@ -11,24 +11,30 @@ const Login = (props) => {
 
   const submmitHandler = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setLoading(true);    
+    const rsp = await LogInRequest(formData);
+    setResponse(rsp);
 
-    try {
-      const rsp = await LogInRequest(formData);
-      setResponse(rsp);
-
-      if (rsp?.response?.token) {
-        localStorage.setItem('jwt', rsp.response.token);
-        props.onLogin();
-        setRedirect(true);
-      } else {
-        setError('No se pudo iniciar sesión en este momento.');
-      }
-    } catch (error) {
-      setError('Ocurrió un error al iniciar sesión.');
-    } finally {
-      setLoading(false);
+    if (rsp?.response?.token) {
+      localStorage.setItem('jwt', rsp.response.token);
+      props.onLogin();
+      setRedirect(true);
     }
+
+    if (rsp?.status === 400 && rsp.errors) {            
+      let errorMessages = Object.values(rsp.errors)
+        .flat()
+        .join('. ');
+
+      setError(errorMessages);
+    }
+
+    if (rsp?.statusCode === 500) {        
+      let error = "Credenciales no validas";
+      setError(error);
+    }
+    console.log(rsp);
+    setLoading(false);    
   };
 
   if (redirect) {
