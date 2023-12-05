@@ -12,7 +12,6 @@ const Suppliers = (props) => {
         e.preventDefault();
         let rsp = await create(supplierData);
         if (rsp?.statusCode == 200){
-            console.log(rsp);
             loadTableData();
         }            
         else if (rsp?.status == 400) {
@@ -76,13 +75,13 @@ const Suppliers = (props) => {
                                         <h5 className="card-title mb-4">Nuevo proveedor</h5>
                                         <form onSubmit={handleSubmit} className="form-inline">
                                             <label className="sr-only" >Proveedor</label>
-                                            <input onChange={(e) => setSupplierData({...supplierData, name: e.target.value})} type="text" className="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Nombre de Proveedor"/>
+                                            <input onChange={(e) => setSupplierData({...supplierData, name: e.target.value})} type="text" className="form-control mb-2 mr-sm-2" value={supplierData.name} placeholder='Nombre'/>
 
                                             <label className="sr-only" >Direccion</label>                                                                  
-                                            <input onChange={(e) => setSupplierData({...supplierData, address: e.target.value})} type="text" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder="Direccion"/>      
+                                            <input onChange={(e) => setSupplierData({...supplierData, address: e.target.value})} type="text" className="form-control mb-2 mr-sm-2" value={supplierData.address} placeholder='Direccion'/>      
 
                                             <label className="sr-only" >Telefono</label>                                                                  
-                                            <input onChange={(e) => setSupplierData({...supplierData, phone: e.target.value})} type="number" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder="Telefono"/>                                                        
+                                            <input onChange={(e) => setSupplierData({...supplierData, phone: e.target.value})} type="number" className="form-control mb-2 mr-sm-2" value={supplierData.phone} placeholder='N° Telefono'/>                                                        
 
                                             <button type="submit" className="btn btn-success mb-2">+</button>
                                         </form>
@@ -92,13 +91,13 @@ const Suppliers = (props) => {
                                         <h5 className="card-title mb-4">Editar proveedor</h5>
                                         <form onSubmit={handleEdit} className="form-inline">
                                             <label className="sr-only" >Cambiar nombre</label>
-                                            <input onChange={(e) => setItemOnEdit({...itemOnEdit, name: e.target.value})} type="text" className="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder={itemOnEdit.name}/>
+                                            <input onChange={(e) => setItemOnEdit({...itemOnEdit, name: e.target.value})} type="text" className="form-control mb-2 mr-sm-2" value={itemOnEdit.name}/>
 
                                             <label className="sr-only" >Cambiar direccion</label>                                                                  
-                                            <input onChange={(e) => setItemOnEdit({...itemOnEdit, address: e.target.value})} type="text" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder={itemOnEdit.adress}/>      
+                                            <input onChange={(e) => setItemOnEdit({...itemOnEdit, address: e.target.value})} type="text" className="form-control mb-2 mr-sm-2" value={itemOnEdit.adress}/>      
 
                                             <label className="sr-only" >Cambiar telefono</label>                                                                  
-                                            <input onChange={(e) => setItemOnEdit({...itemOnEdit, phone: e.target.value})} type="number" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder={itemOnEdit.phone}/>                                                        
+                                            <input onChange={(e) => setItemOnEdit({...itemOnEdit, phone: e.target.value})} type="number" className="form-control mb-2 mr-sm-2" value={itemOnEdit.phone}/>                                                        
 
                                             <button type="submit" className="btn btn-success btn-sm mr-2">Aceptar <i className="bi bi-check2"></i></button>
                                             <button onClick={() => setItemOnEdit(null)} type="button" className="btn btn-danger btn-sm">Cancelar <i className="bi bi-x-lg"></i></button>
