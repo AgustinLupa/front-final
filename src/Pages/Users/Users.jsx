@@ -116,7 +116,7 @@ const Users = (props) => {
                         <div className="card-body">
                             <h3 className="text-center mb-4">Lista de usuarios</h3>
                             <table className="table">
-                                <thead class="table-dark">
+                                <thead className="table-dark">
                                     <tr>                                    
                                     <th scope="col">Nombre</th>
                                     <th scope="col">Rol</th>                                    

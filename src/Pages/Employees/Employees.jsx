@@ -191,7 +191,7 @@ const Employees = (props) => {
                         <div className="card-body">
                             <h5 className="card-title">Lista de empleados</h5>
                             <table className="table">
-                                <thead>
+                                <thead className="table-dark">
                                     <tr>
                                         <th>Nombre</th>
                                         <th>Apellido</th>
