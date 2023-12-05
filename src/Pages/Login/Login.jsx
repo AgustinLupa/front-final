@@ -42,39 +42,43 @@ const Login = (props) => {
 
     return (
         <>
-            <section className="container">                
-                <div className="row justify-content-center">
-                    <div className="col-md-6 my-5">
-                        <div className="card">
-                            <div className="card-body">
-                                <form onSubmit={submmitHandler}>
-                                    <div className="form-group">
-                                        <label htmlFor="" className="text-sm text-gray-700">Nombre de Usuario</label>
-                                        <input
-                                            type="text"
-                                            className="form-control border-double border-4 border-sky-500 text-center"
-                                            onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-                                            disabled={loading}
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="">Clave</label>
-                                        <input
-                                            type="password"
-                                            className="form-control border-double border-4 border-sky-500 text-center"
-                                            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                                            disabled={loading}
-                                        />
-                                    </div>
-                                    <button type="submit" className="btn btn-primary" disabled={loading}>
-                                        {loading ? 'Ingresando...' : 'Ingresar'}
-                                    </button>
-                                </form>
-                                {error && <div className="text-danger mt-3">{error}</div>}
-                            </div>
-                        </div>
+            <section className="vh-100 gradient-custom">
+              <div className="container py-5 h-100">
+                <div className="row d-flex justify-content-center align-items-center h-100">
+                  <div className="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div className="card bg-dark text-white" style={{ borderRadius: '1rem' }}>
+                      <div className="card-body p-5 text-center">
+                        <form className='mb-md-5 mt-md-4 pb-5' onSubmit={submmitHandler}>
+                          <h2 className="fw-bold mb-2 text-uppercase">Login</h2>
+                          <p className="text-white-50 mb-5">Porfavor ingrese su usuario y clave para iniciar!</p>
+                              <div className="form-group form-outline form-white mb-4">
+                                  <label htmlFor="" className="text-sm text-gray-700">Nombre de Usuario</label>
+                                  <input
+                                      type="text"
+                                      className="form-control border-double border-4 border-sky-500 text-center"
+                                      onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                                      disabled={loading}
+                                  />
+                              </div>
+                              <div className="form-group form-outline form-white mb-4">
+                                  <label htmlFor="">Clave</label>
+                                    <input
+                                      type="password"
+                                      className="form-control border-double border-4 border-sky-500 text-center"
+                                      onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                                      disabled={loading}
+                                  />
+                              </div>
+                              <button type="submit" className="btn btn-outline-light btn-lg px-5" disabled={loading}>
+                                  {loading ? 'Ingresando...' : 'Ingresar'}
+                              </button>
+                          </form>
+                          {error && <div className="text-danger mt-3">{error}</div>}
+                      </div>
                     </div>
+                  </div>
                 </div>
+              </div>
             </section>
         </>
     );
