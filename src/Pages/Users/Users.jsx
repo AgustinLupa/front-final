@@ -14,7 +14,7 @@ const Users = (props) => {
     });
     const [anyerror, setAnyerror] = useState("");
     const [response, setResponse] = useState("");
-    const [itemOnEdit, setItemOnEdit] = useState({});
+    const [itemOnEdit, setItemOnEdit] = useState(null);
 
     const loadTableData = async () => {        
         let rsp = await searchUsers();          
@@ -74,6 +74,12 @@ const Users = (props) => {
 
     const handleEdit = async (e) => {
         e.preventDefault();      
+
+        if (itemOnEdit.username === undefined)
+            itemOnEdit.username= itemOnEdit.name;
+        if (itemOnEdit.id_role === undefined)
+            itemOnEdit.id_role= itemOnEdit.id_Role;
+
         let rsp = await updateUsers(itemOnEdit);        
         console.log(rsp);
         if (rsp?.statusCode == 200){
@@ -86,9 +92,10 @@ const Users = (props) => {
         console.log(itemOnEdit);
     }
 
-    const handleDelete = async (e) => {
+    const handleDelete = async (id) => {
         e.preventDefault();
-        let rsp = await deleteUser(itemOnEdit);        
+        let rsp = await deleteUser(id);   
+        loadTableData();     
     }
     
 
@@ -111,12 +118,12 @@ const Users = (props) => {
                                             <input type="password" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder="Clave" onChange={e => setFormData({...formData, password: e.target.value})}/>                                
                                             
                                             <div className="form-check form-check-inline ">
-                                                <input className="form-check-input ml-4" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" onChange={() => setFormData({...formData, id_role: 10})}/>
-                                                <label className="form-check-label" htmlFor="inlineRadio1">Admin</label>
+                                                <input className="form-check-input ml-4" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" onChange={() => setFormData({...formData, id_role: 1})} checked/>
+                                                <label className="form-check-label" htmlFor="inlineRadio1">Usuario</label>
                                             </div>
                                             <div className="form-check form-check-inline">
-                                                <input className="form-check-input ml-4" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" onChange={() => setFormData({...formData, id_role: 2})} checked/>
-                                                <label className="form-check-label" htmlFor="inlineRadio2">Usuario</label>
+                                                <input className="form-check-input ml-4" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" onChange={() => setFormData({...formData, id_role: 2})}/>
+                                                <label className="form-check-label" htmlFor="inlineRadio2">Admin</label>
                                             </div>
                                             <button type="submit" className="btn btn-success mb-2 ml-3">+</button>
                                         </form>
@@ -132,12 +139,12 @@ const Users = (props) => {
                                             <input type="password" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder="Clave" onChange={e => setFormData({...itemOnEdit, password: e.target.value})}/>                                
                                             
                                             <div className="form-check form-check-inline ">
-                                                <input className="form-check-input ml-4" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" onChange={() => setFormData({...itemOnEdit, id_role: 10})} checked={itemOnEdit?.id_role === 10} />
-                                                <label className="form-check-label" htmlFor="inlineRadio1">Admin</label>
+                                                <input className="form-check-input ml-4" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" onChange={() => setFormData({...itemOnEdit, id_role: 1})} checked={itemOnEdit?.id_Role == 1} />
+                                                <label className="form-check-label" htmlFor="inlineRadio1">Usuario</label>
                                             </div>
                                             <div className="form-check form-check-inline">
-                                                <input className="form-check-input ml-4" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" onChange={() => setFormData({...itemOnEdit, id_role: 2})} checked={itemOnEdit?.id_role === 2} />
-                                                <label className="form-check-label" htmlFor="inlineRadio2">Usuario</label>
+                                                <input className="form-check-input ml-4" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" onChange={() => setFormData({...itemOnEdit, id_role: 2})} checked={itemOnEdit?.id_Role == 2} />
+                                                <label className="form-check-label" htmlFor="inlineRadio2">Admin</label>
                                             </div>
                                             <button type="submit" className="btn btn-success btn-sm mr-2">Aceptar <i className="bi bi-check2"></i></button>
                                             <button onClick={() => setItemOnEdit(null)} type="button" className="btn btn-danger btn-sm">Cancelar <i className="bi bi-x-lg"></i></button>
@@ -172,8 +179,8 @@ const Users = (props) => {
                                         <td>{user.name}</td>
                                         <td>{user.id_Role === 2 ? 'Admin' : 'Usuario'}</td>
                                         <td>
-                                            <button onClick={() => setItemOnEdit(item)} className="btn btn-sm btn-info mr-2"><i className="bi bi-pencil-square"></i></button>
-                                            <button onClick={() => handleDelete(item.id)} className="btn btn-sm btn-dark"><i className="bi bi-eye-slash"></i></button>
+                                            <button onClick={() => setItemOnEdit(user)} className="btn btn-sm btn-info mr-2"><i className="bi bi-pencil-square"></i></button>
+                                            <button onClick={() => handleDelete(user.id)} className="btn btn-sm btn-dark"><i className="bi bi-eye-slash"></i></button>
                                         </td>
                                         </tr>
                                     ))}                                  
