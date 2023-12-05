@@ -9,22 +9,22 @@ export const createUser = async (new_user_data) => {
 }
 
 export const searchUsers = async () => {
-    let url = 'users';
+    let url = 'users/active';
     let rsp = await GET(url);
 
     return rsp;
 }
 
 export const updateUsers = async (id, update_params) => {
-    let url ='users/update/' + {id};
+    let url ='users/update/' + id;
     let rsp = await PUT(url, update_params);
     
     return rsp;
 }
 
 export const deleteUser = async  (id) =>{
-    let url = 'users/delete/' + {id};
-    let rsp = await DELETE(url, request);
+    let url = 'users/delete/' + id;
+    let rsp = await DELETE(url);
 
     return rsp;
 }
