@@ -7,7 +7,7 @@ const Users = (props) => {
     const defInputValue = {
         username: '',
         password: '',
-        id_role: 2
+        id_role: 1
     }
 
     const [tableInfo, setTableInfo] = useState([]);

@@ -17,6 +17,7 @@ const Login = (props) => {
 
     if (rsp?.response?.token) {
       localStorage.setItem('jwt', rsp.response.token);
+      localStorage.setItem('role', rsp.response?.user?.id_Role);
       props.onLogin();
       setRedirect(true);
     }
@@ -42,7 +43,7 @@ const Login = (props) => {
     if (response.response?.user?.id_Role === 2) {
       return <Navigate to='/users' replace={true} />;
     } else {
-      return <Navigate to='/employee' replace={true} />;
+      return <Navigate to='/employees' replace={true} />;
     }
   }
 
