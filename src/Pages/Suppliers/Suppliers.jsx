@@ -3,7 +3,13 @@ import { create, edit, hide, list } from '../../Services/Suppliers';
 
 const Suppliers = (props) => {
 
-    const [supplierData, setSupplierData] = useState({});
+    const defInputValue = {
+        name: '',
+        address: '',
+        phone: 0
+    }
+
+    const [supplierData, setSupplierData] = useState(defInputValue);
     const [tableData, setTableData] = useState([]);
     const [submitErrors, setSubmitErrors] = useState([]);
     const [submitMessage, setSubmitMessage] = useState();
@@ -14,10 +20,12 @@ const Suppliers = (props) => {
         let rsp = await create(supplierData);
         if (rsp?.statusCode == 200){
             loadTableData();
-
+            setSubmitMessage(rsp.message);
         }            
         else if (rsp?.status == 400) {
-            console.log(rsp);
+            console.log(rsp.errors);
+            setSubmitErrors(rsp.errors);
+            console.log(submitErrors);
         }
         else {
             window.alert('No se pudo cargar la informacion. Inicie sesion nuevamente');
@@ -60,6 +68,7 @@ const Suppliers = (props) => {
             loadTableData();
         }
         else if (rsp?.statusCode == 404){
+            window.alert('No se encontro el proveedor.');
             loadTableData();
         }
         else {
@@ -124,7 +133,20 @@ const Suppliers = (props) => {
                                     </>
                                 )
                             }
-                            
+                            { submitErrors.length > 0 && (
+                                <div className="alert alert-danger">
+                                    { submitErrors.map( (item, index) => {
+                                        return (
+                                            <p key={index}>{item.map( (error) => error)}</p>
+                                        )
+                                    })}
+                                </div>
+                            )}
+                            { submitMessage && (
+                                <div className="alert alert-info">
+                                    <p>{submitMessage}</p>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
