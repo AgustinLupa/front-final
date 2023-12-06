@@ -23,9 +23,12 @@ const Suppliers = (props) => {
             setSubmitMessage(rsp.message);
         }            
         else if (rsp?.status == 400) {
-            console.log(rsp.errors);
-            setSubmitErrors(rsp.errors);
-            console.log(submitErrors);
+            let errorMessages = Object.values(rsp.errors)
+                .flat()
+                .join(' ');
+            console.log(rsp.errors);            
+            setSubmitErrors(errorMessages);
+            console.log(errorMessages);
         }
         else {
             window.alert('No se pudo cargar la informacion. Inicie sesion nuevamente');
@@ -133,20 +136,11 @@ const Suppliers = (props) => {
                                     </>
                                 )
                             }
-                            { submitErrors.length > 0 && (
-                                <div className="alert alert-danger">
-                                    { submitErrors.map( (item, index) => {
-                                        return (
-                                            <p key={index}>{item.map( (error) => error)}</p>
-                                        )
-                                    })}
+                            { submitErrors && (
+                                <div className="text-danger">                                    
+                                    {submitErrors? <div className="text-danger mt-3">{submitErrors}</div> : <div className="text-success mt-3">{submitsuccess}</div> }                                    
                                 </div>
-                            )}
-                            { submitMessage && (
-                                <div className="alert alert-info">
-                                    <p>{submitMessage}</p>
-                                </div>
-                            )}
+                            )}                            
                         </div>
                     </div>
                 </div>
