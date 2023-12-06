@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { create, edit, hide, list } from '../../Services/Suppliers';
+import { create, edit, hide, list, searchByName } from '../../Services/Suppliers';
 
 const Suppliers = (props) => {
 
@@ -14,6 +14,7 @@ const Suppliers = (props) => {
     const [submitErrors, setSubmitErrors] = useState([]);
     const [submitMessage, setSubmitMessage] = useState();
     const [itemOnEdit, setItemOnEdit] = useState(null);
+    const [nameSearch, setNameSearch] = useState('');
  
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -57,8 +58,9 @@ const Suppliers = (props) => {
     }
 
     const loadTableData = async () => {
-        let rsp = await list();      
-        if (rsp?.statusCode == 200){
+        let rsp= nameSearch === '' ? await list() : await searchByName(nameSearch);
+        console.log(rsp);
+        if (rsp?.statusCode == 200 || rsp?.statusCode == 404){
             setTableData(rsp.response);
         } else {
             window.alert('No se pudo cargar la informacion. Inicie sesion nuevamente.');
@@ -83,7 +85,7 @@ const Suppliers = (props) => {
 
     useEffect( () => {
         loadTableData();
-    }, [])
+    }, [nameSearch])
 
     useEffect(() => {
         const clearMessages = setTimeout(() => {
@@ -149,6 +151,15 @@ const Suppliers = (props) => {
 
             <div className="row">
                 <div className="col">
+                    <div className="card">
+                        <div className="card-body">
+                            <div className="form-inline">
+                                <span className="mr-2">Buscar por nombre:</span>
+                                <span><input onChange={(e) => setNameSearch(e.target.value)} type="text" className="form-control ml-2 mr-sm-2" /></span>
+                                { nameSearch !== '' && (<button onClick={() => setNameSearch('')} className="btn btn-sm btn-danger"><i className="bi bi-x"></i></button>)}
+                            </div>                                                        
+                        </div>
+                    </div>
                     <div className="card">
                         <div className="card-body">
                             <h5 className="card-title">Lista de proveedores</h5>
