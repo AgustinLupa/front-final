@@ -6,6 +6,7 @@ const Suppliers = (props) => {
     const [supplierData, setSupplierData] = useState({});
     const [tableData, setTableData] = useState([]);
     const [submitErrors, setSubmitErrors] = useState([]);
+    const [submitMessage, setSubmitMessage] = useState();
     const [itemOnEdit, setItemOnEdit] = useState(null);
  
     const handleSubmit = async (e) => {
@@ -13,13 +14,14 @@ const Suppliers = (props) => {
         let rsp = await create(supplierData);
         if (rsp?.statusCode == 200){
             loadTableData();
+
         }            
         else if (rsp?.status == 400) {
             console.log(rsp);
         }
         else {
-            window.alert('No se pudo cargar la informacion Inicie sesion nuevamente');
-            window.location.replace('/login') 
+            window.alert('No se pudo cargar la informacion. Inicie sesion nuevamente');
+            window.location.replace('/logout');
         }
     }
 
@@ -34,33 +36,50 @@ const Suppliers = (props) => {
             setItemOnEdit(null);
         }
         else if (rsp?.status == 400){
-            console.log(rsp);
+            loadTableData();
         }            
-        console.log(itemOnEdit);
+        else {
+            window.alert('No se pudo cargar la informacion. Inicie sesion nuevamente');
+            window.location.replace('/logout');
+        }
     }
 
     const loadTableData = async () => {
-        let rsp = await list();        
-        console.log(rsp);
+        let rsp = await list();      
         if (rsp?.statusCode == 200){
             setTableData(rsp.response);
         } else {
             window.alert('No se pudo cargar la informacion. Inicie sesion nuevamente.');
-            window.location.replace('/login') 
+            window.location.replace('/logout');
         }
     }
 
     const hideItem = async (id) => {
         let rsp = await hide(id);
-        console.log(rsp);
         if (rsp?.statusCode == 200){
             loadTableData();
+        }
+        else if (rsp?.statusCode == 404){
+            loadTableData();
+        }
+        else {
+            window.alert('No se pudo cargar la informacion. Inicie sesion nuevamente.');
+            window.location.replace('/logout');
         }
     }
 
     useEffect( () => {
         loadTableData();
     }, [])
+
+    useEffect(() => {
+        const clearMessages = setTimeout(() => {
+            setSubmitMessage();
+            setSubmitErrors([]);
+        }, 4000);  // Limpiar mensajes después de 4 segundos
+    
+        return () => clearTimeout(clearMessages);
+    }, [submitErrors, submitMessage]);
 
     return (
         <>
