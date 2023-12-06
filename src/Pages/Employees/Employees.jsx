@@ -125,7 +125,7 @@ const Employees = (props) => {
         const clearMessages = setTimeout(() => {
             setSubmitSuccess("");
             setSubmitErrors("");
-        }, 4000);  // Limpiar mensajes después de 5 segundos
+        }, 4000);  // Limpiar mensajes después de 4 segundos
     
         return () => clearTimeout(clearMessages);
     }, [submitErrors, submitsuccess]);
