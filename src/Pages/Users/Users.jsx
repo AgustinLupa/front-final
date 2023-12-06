@@ -4,17 +4,19 @@ import { Navigate } from 'react-router-dom';
 import { createUser } from "../../Services/Users";
 
 const Users = (props) => {
-    const [tableInfo, setTableInfo] = useState([]);
-    const [action, setAction] = useState(false);
-    const [formData, setFormData] = useState({
+    const defInputValue = {
         username: '',
         password: '',
-        id_role: 2,
-        state: 1,
-    });
+        id_role: 2
+    }
+
+    const [tableInfo, setTableInfo] = useState([]);
+    const [action, setAction] = useState(false);
+    const [formData, setFormData] = useState(defInputValue);
     const [anyerror, setAnyerror] = useState("");
     const [response, setResponse] = useState("");
     const [itemOnEdit, setItemOnEdit] = useState(null);
+    
 
     const loadTableData = async () => {        
         let rsp = await searchUsers();          
@@ -53,8 +55,10 @@ const Users = (props) => {
             }
     
             if (rsp?.statusCode === 200) {
-                setResponse("Se creo el Usuario con Exito!.")
+                setResponse("Se creo el Usuario con Exito!.");
                 setAction(true);
+                e.target.reset();
+                setFormData(defInputValue);
             }            
 
             if(rsp instanceof TypeError){
@@ -80,22 +84,44 @@ const Users = (props) => {
         if (itemOnEdit.id_role === undefined)
             itemOnEdit.id_role= itemOnEdit.id_Role;
 
+        console.log(itemOnEdit);
         let rsp = await updateUsers(itemOnEdit);        
         console.log(rsp);
         if (rsp?.statusCode == 200){
             loadTableData();            
+            setItemOnEdit(defInputValue);            
             setItemOnEdit(null);
         }
         else if (rsp?.status == 400){
             console.log(rsp);
         }            
+        e.target.reset();
         console.log(itemOnEdit);
     }
 
     const handleDelete = async (id) => {
-        e.preventDefault();
         let rsp = await deleteUser(id);   
-        loadTableData();     
+        if (rsp?.statusCode == 200){
+            loadTableData();     
+        }
+        if (rsp?.statusCode == 404){
+            window.alert('No se ha encontrado el usuario que intento eliminar.');
+            loadTableData();     
+        }
+        if(rsp instanceof TypeError){
+            window.alert('No se pudo cargar la informacion Inicie sesion nuevamente');
+            window.location.replace('/logout') 
+        }   
+    }
+
+    const cancelEdit = () => {
+        setItemOnEdit(null);
+        document.getElementById('user-form').reset();
+    }
+
+    const editItem = (item) => {
+        document.getElementById('user-form').reset();
+        setItemOnEdit(item);
     }
     
 
@@ -110,7 +136,7 @@ const Users = (props) => {
                                 itemOnEdit === null ? (
                                     <>
                                         <h4 className="mb-4">Crear Usuario</h4>
-                                        <form className="form-inline" onSubmit={createuser}>
+                                        <form className="form-inline" onSubmit={createuser} id="user-form">
                                             <label className="sr-only" >Nombre de Usuario</label>
                                             <input type="text" className="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Nombre de Usuario" onChange={e => setFormData({...formData, username: e.target.value})}/>
 
@@ -131,23 +157,20 @@ const Users = (props) => {
                                 ) : (
                                     <>
                                         <h4 className="mb-4">Editar Usuario</h4>
-                                        <form className="form-inline" onSubmit={handleEdit}>
+                                        <form className="form-inline" onSubmit={handleEdit} id="user-form">
                                             <label className="sr-only" >Nombre de Usuario</label>
-                                            <input type="text" className="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Nombre de Usuario" onChange={e => setFormData({...itemOnEdit, username: e.target.value})}/>
-
-                                            <label className="sr-only" >Clave</label>                                                                  
-                                            <input type="password" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder="Clave" onChange={e => setFormData({...itemOnEdit, password: e.target.value})}/>                                
-                                            
+                                            <input type="text" className="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder={itemOnEdit.name} onChange={e => setFormData({...itemOnEdit, username: e.target.value})}/>
+                                        
                                             <div className="form-check form-check-inline ">
-                                                <input className="form-check-input ml-4" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" onChange={() => setFormData({...itemOnEdit, id_role: 1})} checked={itemOnEdit?.id_Role == 1} />
+                                                <input className="form-check-input ml-4" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" onChange={() => setFormData({...itemOnEdit, id_role: 1})} checked />
                                                 <label className="form-check-label" htmlFor="inlineRadio1">Usuario</label>
                                             </div>
                                             <div className="form-check form-check-inline">
-                                                <input className="form-check-input ml-4" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" onChange={() => setFormData({...itemOnEdit, id_role: 2})} checked={itemOnEdit?.id_Role == 2} />
+                                                <input className="form-check-input ml-4" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" onChange={() => setFormData({...itemOnEdit, id_role: 2})} />
                                                 <label className="form-check-label" htmlFor="inlineRadio2">Admin</label>
                                             </div>
                                             <button type="submit" className="btn btn-success btn-sm mr-2">Aceptar <i className="bi bi-check2"></i></button>
-                                            <button onClick={() => setItemOnEdit(null)} type="button" className="btn btn-danger btn-sm">Cancelar <i className="bi bi-x-lg"></i></button>
+                                            <button onClick={() => cancelEdit()} type="button" className="btn btn-danger btn-sm">Cancelar <i className="bi bi-x-lg"></i></button>
                                         </form>
                                     </>
                                 )
@@ -179,7 +202,7 @@ const Users = (props) => {
                                         <td>{user.name}</td>
                                         <td>{user.id_Role === 2 ? 'Admin' : 'Usuario'}</td>
                                         <td>
-                                            <button onClick={() => setItemOnEdit(user)} className="btn btn-sm btn-info mr-2"><i className="bi bi-pencil-square"></i></button>
+                                            <button onClick={() => editItem(user)} className="btn btn-sm btn-info mr-2"><i className="bi bi-pencil-square"></i></button>
                                             <button onClick={() => handleDelete(user.id)} className="btn btn-sm btn-dark"><i className="bi bi-eye-slash"></i></button>
                                         </td>
                                         </tr>
