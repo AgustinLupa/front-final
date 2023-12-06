@@ -14,6 +14,12 @@ export const list = async () => {
     return response;
 }
 
+export const searchByName = async (name) => {
+    const url= base_url + 'find/' + name;
+    let response= await GET(url);
+    return response;
+}
+
 export const edit = async (supplier) => {
     const url= base_url + supplier.id;
     let response= await PUT(url, supplier);
