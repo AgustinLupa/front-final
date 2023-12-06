@@ -45,8 +45,7 @@ const Employees = (props) => {
 
     const handleEdit = async (e) => {
         e.preventDefault();
-        setLoading(true);
-        console.log(itemOnEdit.code_Employee);            
+        setLoading(true);                   
         let rsp = await updateEmployee(itemOnEdit.id, itemOnEdit);                
         if (rsp?.statusCode == 200){
             loadTableData();            

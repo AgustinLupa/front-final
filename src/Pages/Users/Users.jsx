@@ -83,20 +83,16 @@ const Users = (props) => {
             itemOnEdit.username= itemOnEdit.name;
         if (itemOnEdit.id_role === undefined)
             itemOnEdit.id_role= itemOnEdit.id_Role;
-
-        console.log(itemOnEdit);
-        let rsp = await updateUsers(itemOnEdit);        
-        console.log(rsp);
+        
+        let rsp = await updateUsers(itemOnEdit);                
         if (rsp?.statusCode == 200){
             loadTableData();            
             setItemOnEdit(defInputValue);            
             setItemOnEdit(null);
         }
-        else if (rsp?.status == 400){
-            console.log(rsp);
+        else if (rsp?.status == 400){            
         }            
-        e.target.reset();
-        console.log(itemOnEdit);
+        e.target.reset();        
     }
 
     const handleDelete = async (id) => {

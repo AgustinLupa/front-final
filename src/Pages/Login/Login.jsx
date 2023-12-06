@@ -33,8 +33,7 @@ const Login = (props) => {
     if (rsp?.statusCode === 500) {        
       let error = "Credenciales no validas";
       setError(error);
-    }
-    console.log(rsp);
+    }    
     setLoading(false);    
   };
 

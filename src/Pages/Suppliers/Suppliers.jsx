@@ -25,10 +25,8 @@ const Suppliers = (props) => {
         else if (rsp?.status == 400) {
             let errorMessages = Object.values(rsp.errors)
                 .flat()
-                .join(' ');
-            console.log(rsp.errors);            
+                .join(' ');       
             setSubmitErrors(errorMessages);
-            console.log(errorMessages);
         }
         else {
             window.alert('No se pudo cargar la informacion. Inicie sesion nuevamente');
@@ -41,13 +39,16 @@ const Suppliers = (props) => {
         if (itemOnEdit.address === undefined)
             itemOnEdit.address= itemOnEdit.adress;        
         let rsp = await edit(itemOnEdit);        
-        console.log(rsp);
+
         if (rsp?.statusCode == 200){
             loadTableData();            
             setItemOnEdit(null);
         }
         else if (rsp?.status == 400){
-            loadTableData();
+            let errorMessages = Object.values(rsp.errors)
+                .flat()
+                .join(' ');       
+            setSubmitErrors(errorMessages);
         }            
         else {
             window.alert('No se pudo cargar la informacion. Inicie sesion nuevamente');
