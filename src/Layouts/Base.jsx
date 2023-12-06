@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const Base = (props) => {
     
     const role=localStorage.getItem('role');
-    console.log(role);    
+
     return(
         <>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -13,7 +13,7 @@ const Base = (props) => {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav">
-                        {role === 2 && (
+                        {role == 2 && (
                         <li className="nav-item">
                             <Link className="nav-link" to="/users" replace={true}>
                             Usuarios
