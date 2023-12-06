@@ -117,7 +117,7 @@ const Suppliers = (props) => {
                         <div className="card-body">
                             <h5 className="card-title">Lista de proveedores</h5>
                             <table className="table">
-                                <thead>
+                                <thead className='thead-dark'>
                                     <tr>
                                         <th>Nombre</th>
                                         <th>Direccion</th>
