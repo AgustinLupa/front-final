@@ -5,8 +5,7 @@ import { Navigate } from 'react-router-dom';
 const Login = (props) => {
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
-  const [response, setResponse] = useState({});
-  const [error, setError] = useState(null);
+  const [response, setResponse] = useState({});  
   const [redirect, setRedirect] = useState(false);
 
   const submmitHandler = async (e) => {
@@ -16,16 +15,21 @@ const Login = (props) => {
     setResponse(rsp);
 
     if (rsp) {
-      localStorage.setItem('user', rsp);      
+      localStorage.setItem('user');      
       props.onLogin();
       setRedirect(true);
-    }
-    
+    }    
+    setLoading(false);    
+  };
 
-    if (redirect) {          
-        return <Navigate to='/users' replace={true} />;
-      }
-  }  
+  if (redirect) {
+    
+    if (response) {
+      return <Navigate to='/users' replace={true} />;
+    } else {
+      return <Navigate to='/employees' replace={true} />;
+    }
+  }
 
     return (
         <>
@@ -43,7 +47,7 @@ const Login = (props) => {
                                   <input
                                       type="text"
                                       className="form-control border-double border-4 border-sky-500 text-center"
-                                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                      onChange={(e) => setFormData({ ...formData, username: e.target.value })}
                                       disabled={loading}
                                   />
                               </div>
@@ -59,8 +63,7 @@ const Login = (props) => {
                               <button type="submit" className="btn btn-outline-light btn-lg px-5" disabled={loading}>
                                   {loading ? 'Ingresando...' : 'Ingresar'}
                               </button>
-                          </form>
-                          {error && <div className="text-danger mt-3">{error}</div>}
+                          </form>                          
                       </div>
                     </div>
                   </div>
