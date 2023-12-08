@@ -22,12 +22,10 @@ const Login = (props) => {
     }
     
 
-  if (redirect) {
-    
-    if (response) {
-      return <Navigate to='/users' replace={true} />;
-    }
-  }
+    if (redirect) {          
+        return <Navigate to='/users' replace={true} />;
+      }
+  }  
 
     return (
         <>
