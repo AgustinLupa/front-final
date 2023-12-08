@@ -4,7 +4,6 @@ import Base from "../Layouts/Base";
 import Login from "./Login/Login";
 import Users from "./Users/Users";
 import Employees from "./Employees/Employees";
-import Suppliers from "./Suppliers/Suppliers";
 import Logout from "./Login/Logout";
 
 function App() {
