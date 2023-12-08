@@ -16,62 +16,16 @@ const Employees = (props) => {
         setLoading(true);
         let rsp = await createEmployee(employeeData);
 
-        if (rsp?.statusCode == 200){            
+        if (rsp){            
             loadTableData();
             setSubmitSuccess("Se Creo el Empleado correctamente");
             setEmployeeData(initialState);
-        }            
-        if (rsp?.status === 400 && rsp.errors) {            
-            let errorMessages = Object.values(rsp.errors)
-                .flat()
-                .join(' ');
-
-            setSubmitErrors(errorMessages);
-        }
-
-        if (rsp?.statusCode === 500) {
-            
-            let error = "El nombre de usuario ya existe o no es valido. " + rsp.message;
-            setSubmitErrors(error);
-        }
-
-        if(rsp instanceof TypeError){
-            window.alert('No se pudo cargar la informacion Inicie sesion nuevamente');
-
-            window.location.replace('/logout') 
-        }
+        }else{
+            setSubmitErrors("No se pudo crear el empleado");
+        }                    
         setLoading(false);   
     }
-
-    const handleEdit = async (e) => {
-        e.preventDefault();
-        setLoading(true);                   
-        let rsp = await updateEmployee(itemOnEdit.id, itemOnEdit);                
-        if (rsp?.statusCode == 200){
-            loadTableData();            
-            setItemOnEdit(null);
-            setSubmitSuccess("Se modifico Correctamente el empleado");
-            setEmployeeData(initialState);
-        }
-        
-        else if (rsp?.status == 400){
-            let errorMessages = Object.values(rsp.errors)
-                .flat()
-                .join(' ');
-
-            setSubmitErrors(errorMessages);                
-        }else if(rsp?.statusCode === 500){
-            let error = "El codigo de empleado ya existe o no es valido. " + rsp.message;
-            setSubmitErrors(error);
-        } 
-        
-        if(rsp instanceof TypeError){
-            window.alert('No se pudo cargar la informacion Inicie sesion nuevamente');
-            window.location.replace('/logout')  
-        }
-        
-        setLoading(false);
-    }
+    
 
     const initialState = {
         name: '',
@@ -82,38 +36,21 @@ const Employees = (props) => {
 
     const loadTableData = async () => {
         let rsp = await searchEmployee();        
-        if (rsp?.statusCode == 200){
+        if (rsp){
             setTableData(rsp.response);
-        } else {
-            window.alert('No se pudo cargar la informacion. Inicie sesion nuevamente.');
-            window.location.replace('/login') 
-        }
+        } 
     }
 
     const hideItem = async (code_Employee) => {
         let rsp = await deleteEmployee(code_Employee);
 
-        if (rsp?.statusCode == 200){
+        if (rsp){
             loadTableData();            
             setSubmitSuccess("Se Elimino Correctamente el empleado");
             setEmployeeData(initialState);
-        }
-        
-        else if (rsp?.status == 400){
-            let errorMessages = Object.values(rsp.errors)
-                .flat()
-                .join(' ');
-
-            setSubmitErrors(errorMessages);                
-        }else if(rsp?.statusCode === 500){
-            let error = "El codigo de empleado no es valido. " + rsp.message;
-            setSubmitErrors(error);
-        } 
-        
-        if(rsp instanceof TypeError){
-            window.alert('No se pudo cargar la informacion Inicie sesion nuevamente');
-            window.location.replace('/logout')  
-        }
+        }else{
+            setSubmitErrors("No se pudo eliminar el Empleado");
+        }                
     }
 
     useEffect( () => {
@@ -136,48 +73,19 @@ const Employees = (props) => {
                     <h3 className="text-center mb-4">Empleados</h3>
                     <div className="card">
                         <div className="card-body">
-                            {
-                                itemOnEdit === null ? (
-                                    <>
-                                        <h5 className="card-title mb-4">Nuevo Empleado</h5>
-                                        <form onSubmit={handleSubmit} className="form-inline">
-                                            <label className="sr-only" >Nombre</label>
-                                            <input onChange={(e) => setEmployeeData({...employeeData, name: e.target.value})} type="text" className="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Nombre de Empleado" value={employeeData.name} disabled={loading}/>
+                                                                
+                            <h5 className="card-title mb-4">Nuevo Empleado</h5>
+                            <form onSubmit={handleSubmit} className="form-inline">
+                                <label className="sr-only" >Nombre</label>
+                                <input onChange={(e) => setEmployeeData({...employeeData, name: e.target.value})} type="text" className="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Nombre de Empleado" value={employeeData.name} disabled={loading}/>
 
-                                            <label className="sr-only" >Apellido</label>                                                                  
-                                            <input onChange={(e) => setEmployeeData({...employeeData, lastName: e.target.value})} type="text" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder="Apellido" value={employeeData.lastName} disabled={loading}/>      
-
-                                            <label className="sr-only" >Dni</label>                                                                  
-                                            <input onChange={(e) => setEmployeeData({...employeeData, dni: e.target.value})} type="number" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder="DNI" value={employeeData.dni} disabled={loading}/>
-
-                                            <label className="sr-only" >Codigo de empleado</label>                                                                  
-                                            <input onChange={(e) => setEmployeeData({...employeeData, code_Employee: e.target.value})} type="number" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder="Codigo de Empleado" value={employeeData.code_Employee} disabled={loading}/>                                                        
-
-                                            <button type="submit" className="btn btn-success mb-2" disabled={loading}>+</button>
-                                        </form>
-                                    </>                                    
-                                ) : (
-                                    <>
-                                        <h5 className="card-title mb-4">Editar Empleado</h5>
-                                        <form onSubmit={handleEdit} className="form-inline">
-                                            <label className="sr-only" >Cambiar nombre</label>
-                                            <input onChange={(e) => setItemOnEdit({...itemOnEdit, name: e.target.value})} type="text" className="form-control mb-2 mr-sm-2" id="inlineFormInputName2" value={itemOnEdit.name} placeholder={itemOnEdit.name} disabled={loading}/>
-
-                                            <label className="sr-only" >Cambiar Apellido</label>                                                                  
-                                            <input onChange={(e) => setItemOnEdit({...itemOnEdit, lastName: e.target.value})} type="text" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" value={itemOnEdit.lastName} placeholder={itemOnEdit.lastName} disabled={loading}/>      
-
-                                            <label className="sr-only" >Cambiar DNI</label>                                                                  
-                                            <input onChange={(e) => setItemOnEdit({...itemOnEdit, dni: e.target.value})} type="number" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" value={itemOnEdit.dni} placeholder={itemOnEdit.dni} disabled={loading}/>
-
-                                            <label className="sr-only" >Cambiar Codigo de empleado</label>                                                                  
-                                            <input onChange={(e) => setItemOnEdit({...itemOnEdit, code_Employee: e.target.value})} type="number" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" value={itemOnEdit.code_Employee} placeholder={itemOnEdit.code_Employee} disabled={loading}/>                                                        
-
-                                            <button type="submit" className="btn btn-success btn-sm mr-2" disabled={loading}>Aceptar <i className="bi bi-check2"></i></button>
-                                            <button onClick={() => setItemOnEdit(null)} type="button" className="btn btn-danger btn-sm" disabled={loading}>Cancelar <i className="bi bi-x-lg"></i></button>
-                                        </form>
-                                    </>
-                                )
-                            }
+                                <label className="sr-only" >email</label>                                                                  
+                                <input onChange={(e) => setEmployeeData({...employeeData, email: e.target.value})} type="email" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder="Apellido" value={employeeData.lastName} disabled={loading}/>    
+                                <label className="sr-only" >Dni</label>                                                                  
+                                <input onChange={(e) => setEmployeeData({...employeeData, phone: e.target.value})} type="number" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder="DNI" value={employeeData.dni} disabled={loading}/>
+                                                                                      
+                                <button type="submit" className="btn btn-success mb-2" disabled={loading}>+</button>
+                            </form>                                                                                                                                                                                
                             {submitErrors? <div className="text-danger mt-3">{submitErrors}</div> : <div className="text-success mt-3">{submitsuccess}</div> }
                         </div>
                     </div>
@@ -192,10 +100,9 @@ const Employees = (props) => {
                             <table className="table">
                                 <thead className="table-dark">
                                     <tr>
-                                        <th>Nombre</th>
-                                        <th>Apellido</th>
-                                        <th>Dni</th>
-                                        <th>Codigo de empleado</th>                                        
+                                        <th>Nombre</th>                                       
+                                        <th>Email</th>
+                                        <th>Telefono</th>                                        
                                         <th>&nbsp;</th>
                                     </tr>
                                 </thead>
@@ -205,11 +112,9 @@ const Employees = (props) => {
                                             return (
                                                 <tr key={index}>
                                                     <td>{item.name}</td>
-                                                    <td>{item.lastName}</td>
-                                                    <td>{item.dni}</td>
-                                                    <td>{item.code_Employee}</td>
-                                                    <td>
-                                                        <button onClick={() => setItemOnEdit(item)} className="btn btn-sm btn-info mr-2"><i className="bi bi-pencil-square"></i></button>
+                                                    <td>{item.email}</td>
+                                                    <td>{item.phone}</td>                                                    
+                                                    <td>                                                        
                                                         <button onClick={() => hideItem(item.code_Employee)} className="btn btn-sm btn-dark"><i className="bi bi-eye-slash"></i></button>
                                                     </td>
                                                 </tr>

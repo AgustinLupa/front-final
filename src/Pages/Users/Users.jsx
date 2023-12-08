@@ -102,16 +102,14 @@ const Users = (props) => {
                             <table className="table">
                                 <thead className="table-dark">
                                     <tr>                                    
-                                    <th scope="col">Nombre</th>
-                                    <th scope="col">Rol</th>    
+                                    <th scope="col">Nombre</th>                                     
                                     <th scope="col">&nbsp;</th>        
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {tableInfo.map((user, index) => (
                                         <tr key={index}>
-                                        <td>{user.name}</td>
-                                        <td>{user.id_Role === 2 ? 'Admin' : 'Usuario'}</td>
+                                        <td>{user.name}</td>                                        
                                         <td>                                            
                                             <button onClick={() => handleDelete(user.id)} className="btn btn-sm btn-dark"><i className="bi bi-eye-slash"></i></button>
                                         </td>
