@@ -41,7 +41,7 @@ const Users = (props) => {
                            
         if (rsp) {
             setResponse("Se creo el Usuario con Exito!.");
-            setAction(true);
+            isLogged();
             e.target.reset();
             setFormData(defInputValue);
         }else {
