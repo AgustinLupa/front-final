@@ -61,17 +61,9 @@ const Users = (props) => {
 
     const handleDelete = async (id) => {
         let rsp = await deleteUser(id);   
-        if (rsp?.statusCode == 200){
+        if (rsp){
             loadTableData();     
-        }
-        if (rsp?.statusCode == 404){
-            window.alert('No se ha encontrado el usuario que intento eliminar.');
-            loadTableData();     
-        }
-        if(rsp instanceof TypeError){
-            window.alert('No se pudo cargar la informacion Inicie sesion nuevamente');
-            window.location.replace('/logout') 
-        }   
+        }    
     }
 
        
