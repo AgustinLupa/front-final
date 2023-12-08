@@ -4,8 +4,7 @@ import { useEffect } from 'react';
 const Logout = () => {
     useEffect(() => {
         // Eliminar el token JWT del localStorage
-        localStorage.removeItem('jwt');
-        localStorage.removeItem('role');
+        localStorage.clear();
         // Redireccionar a la página de inicio de sesión u otra página
         window.location.replace('/login');
     }, []);

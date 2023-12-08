@@ -4,7 +4,6 @@ import Base from "../Layouts/Base";
 import Login from "./Login/Login";
 import Users from "./Users/Users";
 import Employees from "./Employees/Employees";
-import Suppliers from "./Suppliers/Suppliers";
 import Logout from "./Login/Logout";
 
 function App() {
@@ -35,11 +34,7 @@ function App() {
           {
             path:'/users',
             element: <Base children={<Users />}/>
-          },          
-          {
-            path:'/suppliers',
-            element: <Base children={<Suppliers />}/>
-          },
+          },                    
           {
             path:'/employees',
             element: <Base children={<Employees />}/>

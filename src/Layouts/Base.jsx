@@ -13,19 +13,16 @@ const Base = (props) => {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav">
-                        {role == 2 && (
+                        
                         <li className="nav-item">
                             <Link className="nav-link" to="/users" replace={true}>
                             Usuarios
                             </Link>
                         </li>
-                        )}                        
+                                                
                         <li className="nav-item">
                             <Link className="nav-link" to='/employees' replace={true}>Empleados</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to='/suppliers' replace={true}>Proveedores</Link>
-                        </li>                        
+                        </li>                                           
                     </ul>
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item">
