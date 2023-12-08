@@ -19,7 +19,7 @@ const Users = (props) => {
 
     const loadTableData = async () => {        
         let rsp = await searchUsers();                  
-        setTableInfo(rsp.response);                            
+        setTableInfo(rsp);                            
     }
 
     const isLogged= () => {
