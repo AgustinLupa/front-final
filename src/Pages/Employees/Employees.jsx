@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { createEmployee, searchEmployee, updateEmployee, deleteEmployee } from '../../Services/Employee';
+import { createEmployee, searchEmployee, deleteEmployee } from '../../Services/Employee';
 
 const Employees = (props) => {
 
@@ -7,8 +7,7 @@ const Employees = (props) => {
     const [tableData, setTableData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [submitErrors, setSubmitErrors] = useState();
-    const [submitsuccess, setSubmitSuccess] = useState ();
-    const [itemOnEdit, setItemOnEdit] = useState(null);
+    const [submitsuccess, setSubmitSuccess] = useState ();    
  
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -41,6 +40,18 @@ const Employees = (props) => {
         } 
     }
 
+    const isLogged= () => {
+        if(localStorage.getItem('user') != null){
+            loadTableData();            
+        }else{
+            window.replace.location("/login")
+        }
+    }
+
+    useEffect(() => {        
+        isLogged();
+    }, [action]);
+
     const hideItem = async (code_Employee) => {
         let rsp = await deleteEmployee(code_Employee);
 
@@ -51,11 +62,7 @@ const Employees = (props) => {
         }else{
             setSubmitErrors("No se pudo eliminar el Empleado");
         }                
-    }
-
-    useEffect( () => {
-        loadTableData();
-    }, [])
+    }    
 
     useEffect(() => {
         const clearMessages = setTimeout(() => {
