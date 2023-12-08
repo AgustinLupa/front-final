@@ -36,8 +36,9 @@ const Employees = (props) => {
     const loadTableData = async () => {
         let rsp = await searchEmployee();        
         if (rsp){
-            setTableData(rsp.response);
-        } 
+            setTableData(rsp);
+        }
+
     }
 
     const isLogged= () => {
