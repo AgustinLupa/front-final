@@ -59,7 +59,7 @@ const Login = (props) => {
                                   <input
                                       type="text"
                                       className="form-control border-double border-4 border-sky-500 text-center"
-                                      onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                       disabled={loading}
                                   />
                               </div>

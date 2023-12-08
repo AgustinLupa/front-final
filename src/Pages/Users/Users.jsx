@@ -1,6 +1,5 @@
 import { useEffect,useState } from "react";
 import {deleteUser, searchUsers } from "../../Services/Users";
-import { Navigate } from 'react-router-dom';
 import { createUser } from "../../Services/Users";
 
 const Users = (props) => {
