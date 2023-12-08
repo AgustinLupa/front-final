@@ -15,9 +15,8 @@ const Login = (props) => {
     const rsp = await LogInRequest(formData);
     setResponse(rsp);
 
-    if (rsp?.response?.token) {
-      localStorage.setItem('jwt', rsp.response.token);
-      localStorage.setItem('role', rsp.response?.user?.id_Role);
+    if (rsp) {
+      localStorage.setItem('user', rsp);      
       props.onLogin();
       setRedirect(true);
     }
@@ -39,10 +38,8 @@ const Login = (props) => {
 
   if (redirect) {
     
-    if (response.response?.user?.id_Role === 2) {
+    if (response) {
       return <Navigate to='/users' replace={true} />;
-    } else {
-      return <Navigate to='/employees' replace={true} />;
     }
   }
 

@@ -1,4 +1,4 @@
-const backendurl = "http://www.erp-api.somee.com/api/";
+const backendurl = "http://localhost:8080/";
 
 export default backendurl;
 
@@ -9,8 +9,7 @@ export async function POST(url, request){
         method:'POST',
         mode:'cors',
         headers:{
-            'Content-Type':'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('jwt')}` || ''
+            'Content-Type':'application/json',           
         },
         body: JSON.stringify(request)
     })
@@ -29,10 +28,8 @@ export async function GET(url, request = null){
 
     return await fetch(backendurl + url + uri, {
         method:'GET',
-        mode:'cors',
-        headers:{
-            'Authorization': `Bearer ${localStorage.getItem('jwt')}` || ''
-        }
+        mode:'cors'
+        
     })
     .then((res) => res.json())
     .then((res) => res)
@@ -44,8 +41,7 @@ export async function PUT(url, request){
     return await fetch(backendurl + url, {
         method:'PUT',
         mode:'cors',
-        headers: {
-            'Authorization': `Bearer ${localStorage.getItem('jwt')}` || '',
+        headers: {            
             'Content-Type':'application/json'
         },
         body: JSON.stringify(request)
@@ -64,10 +60,7 @@ export async function DELETE(url, request){
 
     return await fetch(backendurl + url + uri, {
         method:'DELETE',
-        mode:'cors',
-        headers:{
-            'Authorization': `Bearer ${localStorage.getItem('jwt')}` || ''
-        }
+        mode:'cors'        
     })
     .then((res) => res.json())
     .then((res) => res)
