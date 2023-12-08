@@ -15,7 +15,7 @@ const Login = (props) => {
     setResponse(rsp);
 
     if (rsp) {
-      localStorage.setItem('user');      
+      localStorage.setItem('user', rsp);      
       props.onLogin();
       setRedirect(true);
     }    
