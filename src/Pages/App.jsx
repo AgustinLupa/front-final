@@ -20,7 +20,7 @@ function App() {
   }
 
   useEffect(() => {
-    if(localStorage.getItem('jwt')){
+    if(localStorage.getItem('user')){
       setAvailableRoutes(
         [
           {
