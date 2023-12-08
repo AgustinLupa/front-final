@@ -87,10 +87,10 @@ const Employees = (props) => {
                                 <label className="sr-only" >Nombre</label>
                                 <input onChange={(e) => setEmployeeData({...employeeData, name: e.target.value})} type="text" className="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Nombre de Empleado" value={employeeData.name} disabled={loading}/>
 
-                                <label className="sr-only" >email</label>                                                                  
-                                <input onChange={(e) => setEmployeeData({...employeeData, email: e.target.value})} type="email" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder="Apellido" value={employeeData.lastName} disabled={loading}/>    
-                                <label className="sr-only" >Dni</label>                                                                  
-                                <input onChange={(e) => setEmployeeData({...employeeData, phone: e.target.value})} type="number" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder="DNI" value={employeeData.dni} disabled={loading}/>
+                                <label className="sr-only" >Telefono</label>                                                                  
+                                <input onChange={(e) => setEmployeeData({...employeeData, email: e.target.value})} type="email" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder="Email" value={employeeData.lastName} disabled={loading}/>    
+                                <label className="sr-only" >Telefono</label>                                                                  
+                                <input onChange={(e) => setEmployeeData({...employeeData, phone: e.target.value})} type="number" className="form-control mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder="Telefono" value={employeeData.dni} disabled={loading}/>
                                                                                       
                                 <button type="submit" className="btn btn-success mb-2" disabled={loading}>+</button>
                             </form>                                                                                                                                                                                
