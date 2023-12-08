@@ -20,21 +20,7 @@ const Login = (props) => {
       props.onLogin();
       setRedirect(true);
     }
-
-    if (rsp?.status === 400 && rsp.errors) {            
-      let errorMessages = Object.values(rsp.errors)
-        .flat()
-        .join('. ');
-
-      setError(errorMessages);
-    }
-
-    if (rsp?.statusCode === 500) {        
-      let error = "Credenciales no validas";
-      setError(error);
-    }    
-    setLoading(false);    
-  };
+    
 
   if (redirect) {
     
