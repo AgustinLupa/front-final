@@ -1,4 +1,4 @@
-import { POST, GET, DELETE, PUT } from '../Services/Httpr.js';
+import { POST, GET, DELETE } from '../Services/Httpr.js';
 
 
 export const createUser = async (new_user_data) => {

@@ -115,7 +115,7 @@ const Employees = (props) => {
                                                     <td>{item.email}</td>
                                                     <td>{item.phone}</td>                                                    
                                                     <td>                                                        
-                                                        <button onClick={() => hideItem(item.code_Employee)} className="btn btn-sm btn-dark"><i className="bi bi-eye-slash"></i></button>
+                                                        <button onClick={() => hideItem(item.id)} className="btn btn-sm btn-dark"><i className="bi bi-eye-slash"></i></button>
                                                     </td>
                                                 </tr>
                                             );
