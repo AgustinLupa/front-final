@@ -50,7 +50,7 @@ const Employees = (props) => {
 
     useEffect(() => {        
         isLogged();
-    }, [action]);
+    }, []);
 
     const hideItem = async (code_Employee) => {
         let rsp = await deleteEmployee(code_Employee);
